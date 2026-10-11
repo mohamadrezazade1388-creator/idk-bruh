@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8f4ef">
+<title>ROMA Shoes — A Little More Glamour</title>
+<style>
+:root{--ink:#211c1a;--muted:#817570;--rose:#bb777b;--blush:#f2e4e0;--cream:#faf7f3;--line:#e9dfd8;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,select{font:inherit}
+button{cursor:pointer}
+.topbar{background:#211c1a;color:#fff;text-align:center;padding:9px 12px;font-size:11px;letter-spacing:1.3px}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px clamp(16px,5vw,70px);background:#fffdfbf2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{font-family:Georgia,serif;font-size:25px;letter-spacing:1.4px;white-space:nowrap}.logo span{color:var(--rose)}
+nav{display:flex;gap:24px}nav a{color:var(--ink);font-size:13px;text-decoration:none}nav a:hover{color:var(--rose)}
+.cart{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px 14px;font-size:12px;white-space:nowrap}
+main{max-width:1200px;margin:auto;padding:24px clamp(14px,3vw,30px) 42px}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:390px;overflow:hidden;border-radius:22px;background:#eee1d7}
+.hero-copy{padding:clamp(25px,5vw,60px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.kicker{font-size:10px;letter-spacing:3px;font-weight:700;color:var(--rose);text-transform:uppercase}
+h1{font-family:Georgia,serif;font-size:clamp(38px,5vw,64px);font-weight:500;line-height:1.05;letter-spacing:-1.6px;margin:17px 0 15px;max-width:440px}
+.hero p{font-size:14px;line-height:1.9;color:#655a55;max-width:360px;margin:0 0 23px}
+.primary{border:0;border-radius:999px;background:var(--ink);color:white;padding:13px 20px;font-size:12px;letter-spacing:.3px;transition:transform .2s,background .2s}
+.primary:hover{transform:translateY(-2px);background:var(--rose)}
+.hero-image{width:100%;height:100%;min-height:390px;object-fit:cover;object-position:center 45%}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 36px}
+.trust div{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px;text-align:center;font-size:12px;color:#6f625c}
+.trust strong{display:block;color:var(--ink);font-size:12px;margin-bottom:4px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:30px 0 17px}
+h2{font-family:Georgia,serif;font-size:clamp(25px,3vw,34px);font-weight:500;letter-spacing:-.5px;margin:0}
+.section-sub{font-size:12px;color:var(--muted);margin-top:7px}
+.result-count{font-size:12px;color:var(--muted)}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:2px 0 15px}
+.filter{border:1px solid var(--line);border-radius:999px;background:transparent;padding:9px 16px;color:#625752;font-size:12px;white-space:nowrap}
+.filter.active,.filter:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{min-width:0;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .22s,box-shadow .22s}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 30px #39251b0d}
+.photo-wrap{position:relative;background:#f0eae5;overflow:hidden}
+.product-photo{display:block;width:100%;height:250px;object-fit:cover;object-position:center;transition:transform .4s}
+.card:hover .product-photo{transform:scale(1.035)}
+.badge{position:absolute;top:11px;left:11px;background:#fffdf2e8;color:#7d4d4d;padding:6px 9px;border-radius:999px;font-size:9px;letter-spacing:1px;text-transform:uppercase}
+.heart{position:absolute;top:10px;right:10px;width:34px;height:34px;border:0;border-radius:50%;background:#ffffffed;color:#3a302c;font-size:20px;line-height:1}
+.details{padding:14px}
+.product-name{font-size:13px;font-weight:650;margin:0 0 6px;line-height:1.5}
+.product-desc{font-size:11px;color:var(--muted);margin-bottom:13px}
+.price-line{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.price{font-size:12px;font-weight:700;white-space:nowrap}
+.add{border:0;background:var(--blush);color:#70484a;border-radius:9px;padding:9px 10px;font-size:11px;white-space:nowrap}
+.add:hover{background:#e8d0cb}
+.size-line{display:flex;align-items:center;gap:8px;margin-top:13px;color:var(--muted);font-size:11px}
+select{background:white;border:1px solid var(--line);border-radius:8px;padding:6px 8px;color:var(--ink)}
+.editorial{margin-top:34px;border-radius:18px;background:linear-gradient(110deg,#f0e0db,#f8f0e9);padding:clamp(22px,4vw,40px);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.editorial h3{font-family:Georgia,serif;font-size:clamp(24px,3vw,34px);font-weight:500;margin:9px 0}
+.editorial p{font-size:12px;color:#74615b;line-height:1.8;margin:0}
+.editorial .primary{background:#fff;color:var(--ink);border:1px solid #e0c6c1;flex-shrink:0}
+footer{background:#211c1a;color:#f9f0e9;padding:30px clamp(16px,5vw,70px) 20px}
+.footer-inner{max-width:1100px;margin:auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-brand{font-family:Georgia,serif;font-size:23px;letter-spacing:1px}footer p{font-size:11px;line-height:1.8;color:#c7b8b0;max-width:300px}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap}.footer-links a{color:#e6d9d1;text-decoration:none;font-size:11px}
+.copyright{max-width:1100px;margin:22px auto 0;border-top:1px solid #ffffff20;padding-top:15px;font-size:10px;color:#b9aaa2;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:20;display:none;max-width:90vw;background:#211c1a;color:white;padding:13px 18px;border-radius:12px;font-size:12px;box-shadow:0 8px 30px #0002}
+@media(max-width:760px){nav{display:none}.hero{grid-template-columns:1fr;min-height:0}.hero-copy{padding:28px 24px 24px}.hero-image{height:260px;min-height:260px;grid-row:1}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product-photo{height:clamp(165px,48vw,245px)}.details{padding:11px}.price-line{align-items:flex-start;flex-direction:column}.add{width:100%}.editorial{align-items:flex-start;flex-direction:column}.trust{gap:8px}.trust div{padding:12px 6px;font-size:10px}.trust strong{font-size:11px}}
+@media(max-width:360px){.logo{font-size:21px}.cart{padding:9px 10px}.grid{gap:8px}.product-name{font-size:12px}.price{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="topbar">A LITTLE MORE GLAMOUR — DISCOVER THE NEW COLLECTION</div>
+<header>
+  <div class="logo">ROMA <span>SHOES</span></div>
+  <nav><a href="#home">Home</a><a href="#shop">Shop</a><a href="#story">Our Story</a></nav>
+  <button class="cart" id="cartBtn">Bag (<span id="cartCount">0</span>)</button>
+</header>
+<main id="home">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="kicker">The occasion edit</div>
+      <h1>Make every<br>entrance shine.</h1>
+      <p>Statement heels, delicate details, and a little sparkle for the moments worth dressing up for.</p>
+      <button class="primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">EXPLORE THE COLLECTION&nbsp; ↗</button>
+    </div>
+    <img class="hero-image" src="hero.jpg" alt="Gold embellished platform heels">
+  </section>
+  <section class="trust" aria-label="Store highlights">
+    <div><strong>✦ Thoughtful details</strong>Styles made to stand out</div>
+    <div><strong>♡ Find your fit</strong>Choose your preferred size</div>
+    <div><strong>✧ Your style, your story</strong>For every special moment</div>
+  </section>
+  <section id="shop">
+    <div class="section-head"><div><h2>The shoe edit</h2><div class="section-sub">A curated selection of statement heels.</div></div><span class="result-count" id="resultCount">04 styles</span></div>
+    <div class="filters">
+      <button class="filter active" data-filter="all">All styles</button>
+      <button class="filter" data-filter="gold">Gold</button>
+      <button class="filter" data-filter="rose">Rose gold</button>
+      <button class="filter" data-filter="silver">Silver</button>
+    </div>
+    <div class="grid" id="grid">
+      <article class="card" data-color="gold">
+        <div class="photo-wrap"><img class="product-photo" src="golden-hour.jpg" alt="Gold bow platform heels"><span class="badge">Bestseller</span><button class="heart" aria-label="Add to wishlist">♡</button></div>
+        <div class="details"><p class="product-name">Golden Hour Platforms</p><div class="product-desc">Gold · Embellished bow</div><div class="price-line"><span class="price">€ 89.00</span><button class="add">Add to bag +</button></div><div class="size-line">Size <select aria-label="Choose shoe size"><option value="">Choose</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option></select></div></div>
+      </article>
+      <article class="card" data-color="gold">
+        <div class="photo-wrap"><img class="product-photo" src="golden-affair.jpg" alt="Gold embellished high heels"><span class="badge">Statement</span><button class="heart" aria-label="Add to wishlist">♡</button></div>
+        <div class="details"><p class="product-name">Golden Affair Heels</p><div class="product-desc">Champagne gold · Ankle strap</div><div class="price-line"><span class="price">€ 95.00</span><button class="add">Add to bag +</button></div><div class="size-line">Size <select aria-label="Choose shoe size"><option value="">Choose</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option></select></div></div>
+      </article>
+      <article class="card" data-color="rose">
+        <div class="photo-wrap"><img class="product-photo" src="rose-glow.jpg" alt="Rose gold embellished platform heels"><span class="badge">Soft shimmer</span><button class="heart" aria-label="Add to wishlist">♡</button></div>
+        <div class="details"><p class="product-name">Rose Glow Platforms</p><div class="product-desc">Rose gold · Sparkling finish</div><div class="price-line"><span class="price">€ 85.00</span><button class="add">Add to bag +</button></div><div class="size-line">Size <select aria-label="Choose shoe size"><option value="">Choose</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option></select></div></div>
+      </article>
+      <article class="card" data-color="silver">
+        <div class="photo-wrap"><img class="product-photo" src="silver-starlight.jpg" alt="Silver embellished platform heels"><span class="badge">Evening edit</span><button class="heart" aria-label="Add to wishlist">♡</button></div>
+        <div class="details"><p class="product-name">Silver Starlight Heels</p><div class="product-desc">Silver · Crystal-inspired shine</div><div class="price-line"><span class="price">€ 90.00</span><button class="add">Add to bag +</button></div><div class="size-line">Size <select aria-label="Choose shoe size"><option value="">Choose</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option></select></div></div>
+      </article>
+    </div>
+  </section>
+  <section class="editorial" id="story">
+    <div><div class="kicker">A note from ROMA</div><h3>For the moments you’ll remember.</h3><p>We believe the right pair of shoes can make an ordinary day feel a little extraordinary.<br>Find the pair that feels like you.</p></div>
+    <button class="primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">FIND YOUR PAIR&nbsp; ↗</button>
+  </section>
+  
+</main>
+<footer>
+  <div class="footer-inner"><div><div class="footer-brand">ROMA SHOES</div><p>Little details. Lasting impressions. Find a pair that brings your outfit — and your confidence — together.</p></div><div class="footer-links"><a href="#home">Home</a><a href="#shop">Shop all</a><a href="#story">Our story</a></div></div>
+  <div class="copyright"><span>© 2026 ROMA Shoes</span><span>Made with care, one step at a time.</span></div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+const CART_KEY='roma_cart_v1';
+function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||[]}catch(e){return window.__cart||[]}}
+function saveCart(c){window.__cart=c;try{localStorage.setItem(CART_KEY,JSON.stringify(c))}catch(e){}}
+function updateCount(){document.getElementById('cartCount').textContent=loadCart().reduce((n,i)=>n+i.qty,0)}
+function showToast(message){const t=document.getElementById('toast');t.textContent=message;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2300)}
+document.querySelectorAll('.add').forEach(btn=>btn.addEventListener('click',()=>{
+ const card=btn.closest('.card'), size=card.querySelector('select').value;
+ if(!size){showToast('Please choose a size first.');return;}
+ const name=card.querySelector('.product-name').textContent;
+ const price=parseFloat(card.querySelector('.price').textContent.replace(/[^0-9.]/g,''));
+ const desc=card.querySelector('.product-desc').textContent;
+ const img=card.querySelector('.product-photo').getAttribute('src');
+ const cart=loadCart();
+ const found=cart.find(i=>i.name===name&&i.size===size);
+ if(found){found.qty++}else{cart.push({name,size,price,desc,img,qty:1})}
+ saveCart(cart);updateCount();
+ showToast('Added to your bag ✓');
+}));
+document.getElementById('cartBtn').addEventListener('click',()=>{window.location.href='cart.html'});
+updateCount();
+document.querySelectorAll('.heart').forEach(btn=>btn.addEventListener('click',()=>{
+ const liked=btn.textContent==='♡';btn.textContent=liked?'♥':'♡';btn.style.color=liked?'#bb5d70':'';showToast(liked?'Saved to your wishlist.':'Removed from your wishlist.');
+}));
+document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');let count=0;
+ document.querySelectorAll('.card').forEach(card=>{const show=btn.dataset.filter==='all'||card.dataset.color===btn.dataset.filter;card.style.display=show?'':'none';if(show)count++;});
+ document.getElementById('resultCount').textContent=String(count).padStart(2,'0')+' styles';
+}));
+</script>
+</body>
+</html>

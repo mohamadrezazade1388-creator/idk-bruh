@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8f4ef">
+<title>Checkout — ROMA Shoes</title>
+<style>
+:root{--ink:#211c1a;--muted:#817570;--rose:#bb777b;--blush:#f2e4e0;--cream:#faf7f3;--line:#e9dfd8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+a{color:inherit}
+.topbar{background:#211c1a;color:#fff;text-align:center;padding:9px 12px;font-size:11px;letter-spacing:1.3px}
+header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px clamp(16px,5vw,70px);background:#fffdfb;border-bottom:1px solid var(--line)}
+.logo{font-family:Georgia,serif;font-size:25px;letter-spacing:1.4px;text-decoration:none;white-space:nowrap}.logo span{color:var(--rose)}
+.secure-tag{font-size:11px;color:var(--muted);letter-spacing:.6px}
+main{max-width:1200px;margin:auto;padding:28px clamp(14px,3vw,30px) 56px}
+.crumbs{font-size:11px;color:var(--muted);margin-bottom:14px}.crumbs a{text-decoration:none}.crumbs a:hover{color:var(--rose)}
+h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,44px);font-weight:500;letter-spacing:-1px;margin:0 0 8px}
+.steps{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:18px 0 26px;flex-wrap:wrap}
+.steps .on{color:var(--ink);font-weight:700}
+.steps .dot{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:#fff;display:inline-grid;place-items:center;font-size:10px;margin-right:6px}
+.steps .on .dot{background:var(--ink);color:#fff;border-color:var(--ink)}
+.steps .bar{flex:0 0 34px;height:1px;background:var(--line)}
+.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:24px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:16px}
+.panel h2{font-family:Georgia,serif;font-size:21px;font-weight:500;margin:0 0 4px}
+.panel .sub{font-size:12px;color:var(--muted);margin:0 0 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:11px;letter-spacing:.6px;color:#625752;text-transform:uppercase}
+.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:14px;background:var(--cream);outline:none;transition:border .2s,background .2s;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--rose);background:#fff}
+.field.invalid input,.field.invalid select{border-color:#b4536a}
+.field .err{font-size:11px;color:#b4536a;display:none}
+.field.invalid .err{display:block}
+textarea{resize:vertical;min-height:70px}
+.pay-note{display:flex;gap:14px;align-items:center;background:var(--cream);border:1px dashed #dccbc3;border-radius:14px;padding:14px 16px;font-size:12px;color:#6f625c;line-height:1.7}
+.pay-note b{color:var(--ink)}
+.lock{flex:0 0 38px;height:38px;border-radius:50%;background:var(--blush);display:grid;place-items:center}
+.lock svg{width:18px;height:18px;stroke:var(--rose);fill:none;stroke-width:1.7}
+.banner{display:none;background:#fbeaee;border:1px solid #efc7d0;color:#8d3a50;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.7;margin-bottom:14px}
+.summary{position:sticky;top:20px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.summary h2{font-family:Georgia,serif;font-size:22px;font-weight:500;margin:0 0 16px}
+.s-item{display:grid;grid-template-columns:62px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.s-item img{width:62px;height:72px;object-fit:cover;border-radius:10px;position:relative}
+.s-img{position:relative}
+.s-img i{position:absolute;top:-6px;right:-6px;background:var(--ink);color:#fff;font-style:normal;font-size:10px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center}
+.s-name{font-size:13px;font-weight:600;line-height:1.4}
+.s-meta{font-size:11px;color:var(--muted)}
+.s-price{font-size:13px;font-weight:600}
+.row{display:flex;justify-content:space-between;font-size:13px;margin:11px 0;color:#625752}.row b{color:var(--ink);font-weight:600}
+.row.discount,.row.discount b{color:#4d8a62}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:14px;padding-top:16px}
+.total span{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.total strong{font-family:Georgia,serif;font-size:30px;font-weight:500}
+.pay{width:100%;margin-top:16px;border:0;border-radius:999px;background:var(--ink);color:#fff;padding:17px;font-size:12px;letter-spacing:1.4px;transition:transform .2s,background .2s}
+.pay:hover{transform:translateY(-2px);background:var(--rose)}
+.pay:disabled{opacity:.6;cursor:wait;transform:none}
+.terms{font-size:11px;color:var(--muted);line-height:1.7;text-align:center;margin:14px 0 0}
+.back{display:inline-block;margin-top:6px;font-size:12px;text-decoration:none;color:#625752}.back:hover{color:var(--rose)}
+footer{background:#211c1a;color:#c7b8b0;padding:22px clamp(16px,5vw,70px);font-size:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.summary{position:static;order:-1}}
+@media(max-width:520px){.grid2{grid-template-columns:1fr;gap:0}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<div class="topbar">A LITTLE MORE GLAMOUR — DISCOVER THE NEW COLLECTION</div>
+<header>
+  <a class="logo" href="index.html">ROMA <span>SHOES</span></a>
+  <span class="secure-tag">🔒 SECURE CHECKOUT</span>
+</header>
+<main>
+  <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="cart.html">Bag</a> &nbsp;/&nbsp; Checkout</div>
+  <h1>Checkout</h1>
+  <div class="steps">
+    <span><span class="dot">✓</span>Bag</span><span class="bar"></span>
+    <span class="on"><span class="dot">2</span>Details</span><span class="bar"></span>
+    <span><span class="dot">3</span>Payment</span>
+  </div>
+
+  <form class="layout" id="form" novalidate>
+    <section>
+      <div class="panel">
+        <h2>Contact</h2>
+        <p class="sub">We'll send your order confirmation here.</p>
+        <div class="field" data-f="email"><label for="email">Email</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"><span class="err">Please enter a valid email.</span></div>
+        <div class="field" data-f="phone"><label for="phone">Phone (optional)</label><input id="phone" type="tel" autocomplete="tel" placeholder="For delivery updates"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Shipping address</h2>
+        <p class="sub">Where should we send your new heels?</p>
+        <div class="field" data-f="name"><label for="name">Full name</label><input id="name" autocomplete="name"><span class="err">Please enter your name.</span></div>
+        <div class="field" data-f="address"><label for="address">Address</label><input id="address" autocomplete="street-address" placeholder="Street and house number"><span class="err">Please enter your address.</span></div>
+        <div class="grid2">
+          <div class="field" data-f="postal"><label for="postal">Postal code</label><input id="postal" autocomplete="postal-code"><span class="err">Required.</span></div>
+          <div class="field" data-f="city"><label for="city">City</label><input id="city" autocomplete="address-level2"><span class="err">Required.</span></div>
+        </div>
+        <div class="field" data-f="country"><label for="country">Country</label>
+          <select id="country" autocomplete="country-name">
+            <option value="">Select country</option>
+            <option>Germany</option><option>Austria</option><option>Switzerland</option><option>Netherlands</option><option>Belgium</option><option>France</option><option>Italy</option><option>Spain</option><option>Sweden</option><option>United Kingdom</option><option>Other</option>
+          </select><span class="err">Please select a country.</span></div>
+        <div class="field"><label for="note">Delivery note (optional)</label><textarea id="note" placeholder="e.g. Leave with the neighbour"></textarea></div>
+      </div>
+
+      <div class="panel">
+        <h2>Payment</h2>
+        <p class="sub">You'll complete payment on Stripe's secure page.</p>
+        <div class="pay-note">
+          <div class="lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          <div><b>Your card details never touch our site.</b><br>Cards, Apple Pay and Google Pay are handled by Stripe with bank-level encryption.</div>
+        </div>
+      </div>
+      <a class="back" href="cart.html">← Return to bag</a>
+    </section>
+
+    <aside class="summary">
+      <h2>Your order</h2>
+      <div id="sItems"></div>
+      <div id="sTotals"></div>
+      <div class="banner" id="banner"></div>
+      <button type="submit" class="pay" id="payBtn">PAY SECURELY</button>
+      <p class="terms">By placing your order you agree to our Terms, Privacy Policy and 14-day return policy.</p>
+    </aside>
+  </form>
+</main>
+<footer><span>© 2026 ROMA Shoes</span><span>Made with care, one step at a time.</span></footer>
+
+<script>
+const CART_KEY='roma_cart_v1', FREE_SHIP=150, SHIP_FEE=6.9;
+function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||[]}catch(e){return window.__cart||[]}}
+function money(n){return '€ '+n.toFixed(2)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let promo=null;try{promo=JSON.parse(sessionStorage.getItem('roma_promo'))}catch(e){}
+
+const cart=loadCart();
+if(!cart.length){window.location.replace('cart.html')}
+
+const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+const discount=promo?subtotal*promo.value/100:0;
+const after=subtotal-discount;
+const shipping=after>=FREE_SHIP?0:SHIP_FEE;
+const total=after+shipping;
+
+document.getElementById('sItems').innerHTML=cart.map(i=>`
+  <div class="s-item">
+    <div class="s-img"><img src="${esc(i.img)}" alt=""><i>${i.qty}</i></div>
+    <div><div class="s-name">${esc(i.name)}</div><div class="s-meta">Size ${esc(i.size)}</div></div>
+    <div class="s-price">${money(i.price*i.qty)}</div>
+  </div>`).join('');
+document.getElementById('sTotals').innerHTML=`
+  <div class="row"><span>Subtotal</span><b>${money(subtotal)}</b></div>
+  ${promo?`<div class="row discount"><span>Promo (${esc(promo.code)})</span><b>− ${money(discount)}</b></div>`:''}
+  <div class="row"><span>Shipping</span><b>${shipping===0?'Free':money(shipping)}</b></div>
+  <div class="total"><span>Total</span><strong>${money(total)}</strong></div>`;
+
+const $=id=>document.getElementById(id);
+function validate(){
+  let ok=true;
+  const rules={email:v=>/^\S+@\S+\.\S+$/.test(v),name:v=>v.trim().length>1,address:v=>v.trim().length>3,postal:v=>v.trim().length>2,city:v=>v.trim().length>1,country:v=>!!v};
+  Object.keys(rules).forEach(k=>{
+    const good=rules[k]($(k).value);
+    document.querySelector(`[data-f="${k}"]`).classList.toggle('invalid',!good);
+    if(!good&&ok){ok=false;$(k).focus()}
+  });
+  return ok;
+}
+function banner(msg){const b=$('banner');b.textContent=msg;b.style.display=msg?'block':'none'}
+
+$('form').addEventListener('submit',async e=>{
+  e.preventDefault();banner('');
+  if(!validate())return;
+  const btn=$('payBtn');btn.disabled=true;btn.textContent='REDIRECTING TO SECURE PAYMENT…';
+  const customer={email:$('email').value.trim(),phone:$('phone').value.trim(),name:$('name').value.trim(),address:$('address').value.trim(),postal:$('postal').value.trim(),city:$('city').value.trim(),country:$('country').value,note:$('note').value.trim()};
+  try{
+    const res=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:cart.map(i=>({name:i.name,size:i.size,qty:i.qty})),promo:promo&&promo.code,customer})});
+    const data=await res.json().catch(()=>({}));
+    if(res.ok&&data.url){window.location.href=data.url;return}
+    throw new Error(data.error||'Payment is not available right now.');
+  }catch(err){
+    const local=location.protocol==='file:'||['localhost','127.0.0.1'].includes(location.hostname);
+    if(local){banner('Preview mode: payment only works once the site is published online with Stripe connected (see README). Opening the confirmation page so you can preview it…');setTimeout(()=>{window.location.href='success.html?preview=1'},2600)}
+    else banner(err.message||'Something went wrong. Please try again.');
+    btn.disabled=false;btn.textContent='PAY SECURELY';
+  }
+});
+document.querySelectorAll('.field input,.field select').forEach(el=>el.addEventListener('input',()=>el.closest('.field').classList.remove('invalid')));
+</script>
+</body>
+</html>
