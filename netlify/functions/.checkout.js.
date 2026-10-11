@@ -1,1 +1,92 @@
 
+// Creates a Stripe Checkout Session. Prices are defined HERE (server-side)
+// so customers can't change them from the browser.
+const CATALOG = {
+  'Golden Hour Platforms': 8900,
+  'Golden Affair Heels': 9500,
+  'Rose Glow Platforms': 8500,
+  'Silver Starlight Heels': 9000
+};
+const CURRENCY = 'eur';
+const FREE_SHIPPING_FROM = 15000; // cents
+const SHIPPING_FEE = 690;         // cents
+const PROMOS = { ROMA10: 10 };    // code -> percent off
+const ALLOWED_SIZES = ['36', '37', '38', '39', '40'];
+
+const json = (statusCode, body) => ({
+  statusCode,
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(body)
+});
+
+async function stripe(path, params, key) {
+  const res = await fetch('https://api.stripe.com/v1/' + path, {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + key,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: params.toString()
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error((data.error && data.error.message) || 'Stripe error');
+  return data;
+}
+
+exports.handler = async (event) => {
+  if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) return json(500, { error: 'Payments are not configured yet.' });
+
+  try {
+    const { items, promo, customer } = JSON.parse(event.body || '{}');
+    if (!Array.isArray(items) || !items.length) return json(400, { error: 'Your bag is empty.' });
+    if (!customer || !/^\S+@\S+\.\S+$/.test(customer.email || '')) return json(400, { error: 'Please enter a valid email.' });
+
+    const p = new URLSearchParams();
+    p.append('mode', 'payment');
+    p.append('customer_email', customer.email);
+
+    let subtotal = 0;
+    items.forEach((it, i) => {
+      const unit = CATALOG[it.name];
+      const qty = Math.min(10, Math.max(1, parseInt(it.qty, 10) || 1));
+      if (!unit || !ALLOWED_SIZES.includes(String(it.size))) throw new Error('Invalid item in bag.');
+      subtotal += unit * qty;
+      p.append(`line_items[${i}][quantity]`, String(qty));
+      p.append(`line_items[${i}][price_data][currency]`, CURRENCY);
+      p.append(`line_items[${i}][price_data][unit_amount]`, String(unit));
+      p.append(`line_items[${i}][price_data][product_data][name]`, `${it.name} — Size ${it.size}`);
+    });
+
+    const percent = PROMOS[String(promo || '').toUpperCase()];
+    let discounted = subtotal;
+    if (percent) {
+      const coupon = await stripe('coupons', new URLSearchParams({ percent_off: String(percent), duration: 'once' }), key);
+      p.append('discounts[0][coupon]', coupon.id);
+      discounted = Math.round(subtotal * (100 - percent) / 100);
+    }
+
+    const shipping = discounted >= FREE_SHIPPING_FROM ? 0 : SHIPPING_FEE;
+    p.append('shipping_options[0][shipping_rate_data][type]', 'fixed_amount');
+    p.append('shipping_options[0][shipping_rate_data][display_name]', shipping ? 'Standard shipping' : 'Free shipping');
+    p.append('shipping_options[0][shipping_rate_data][fixed_amount][amount]', String(shipping));
+    p.append('shipping_options[0][shipping_rate_data][fixed_amount][currency]', CURRENCY);
+
+    // Shipping details are saved on the order so you can see them in the Stripe dashboard.
+    const c = customer;
+    p.append('metadata[name]', String(c.name || '').slice(0, 200));
+    p.append('metadata[phone]', String(c.phone || '').slice(0, 50));
+    p.append('metadata[address]', [c.address, c.postal, c.city, c.country].filter(Boolean).join(', ').slice(0, 480));
+    p.append('metadata[note]', String(c.note || '').slice(0, 480));
+
+    const origin = event.headers.origin || process.env.URL || '';
+    p.append('success_url', origin + '/success.html');
+    p.append('cancel_url', origin + '/checkout.html');
+
+    const session = await stripe('checkout/sessions', p, key);
+    return json(200, { url: session.url });
+  } catch (e) {
+    return json(400, { error: e.message });
+  }
+};
