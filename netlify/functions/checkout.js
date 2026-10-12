@@ -29,7 +29,7 @@ const CATALOG = {
 const CURRENCY = 'eur';
 const FREE_SHIPPING_FROM = 15000; // cents
 const SHIPPING_FEE = 690;         // cents
-const PROMOS = { ROMA10: 10 };    // code -> percent off
+const PROMOS = { ROMA10: 100 };    // code -> percent off
 const ALLOWED_SIZES = ['36', '37', '38', '39', '40'];
 
 const json = (statusCode, body) => ({
