@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8f4ef">
+<title>Your Bag — ROMA Shoes</title>
+<style>
+:root{--ink:#211c1a;--muted:#817570;--rose:#bb777b;--blush:#f2e4e0;--cream:#faf7f3;--line:#e9dfd8;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Jost,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.topbar{background:#211c1a;color:#fff;text-align:center;padding:9px 12px;font-size:11px;letter-spacing:1.3px}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px clamp(16px,5vw,70px);background:#fffdfbf2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{font-family:"Bodoni Moda",Georgia,serif;font-size:25px;letter-spacing:1.4px;white-space:nowrap;text-decoration:none}.logo span{color:var(--rose)}
+nav{display:flex;gap:24px}nav a{color:var(--ink);font-size:13px;text-decoration:none}nav a:hover{color:var(--rose)}
+.cart-pill{background:var(--ink);color:#fff;border-radius:999px;padding:10px 14px;font-size:12px;white-space:nowrap;text-decoration:none}
+
+main{max-width:1200px;margin:auto;padding:28px clamp(14px,3vw,30px) 56px}
+.crumbs{font-size:11px;color:var(--muted);letter-spacing:.4px;margin-bottom:14px}
+.crumbs a{text-decoration:none}.crumbs a:hover{color:var(--rose)}
+.page-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+h1{font-family:"Bodoni Moda",Georgia,serif;font-size:clamp(30px,4vw,44px);font-weight:500;letter-spacing:-1px;margin:0}
+.item-total{font-size:12px;color:var(--muted)}
+
+.steps{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:18px 0 26px;flex-wrap:wrap}
+.steps .on{color:var(--ink);font-weight:700}
+.steps .dot{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:#fff;display:inline-grid;place-items:center;font-size:10px;margin-right:6px}
+.steps .on .dot{background:var(--ink);color:#fff;border-color:var(--ink)}
+.steps .bar{flex:0 0 34px;height:1px;background:var(--line)}
+
+.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px;align-items:start}
+
+.ship-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+.ship-box p{margin:0 0 10px;font-size:12px;color:#6f625c}
+.ship-box strong{color:var(--ink)}
+.track{height:6px;background:var(--blush);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#d4a0a3,var(--rose));border-radius:99px;transition:width .5s}
+
+.items{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.item{display:grid;grid-template-columns:110px 1fr auto;gap:18px;padding:18px;border-bottom:1px solid var(--line);animation:fade .35s both}
+.item:last-child{border-bottom:0}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.item img{width:110px;height:130px;object-fit:cover;border-radius:12px;background:#f0eae5}
+.item-info{display:flex;flex-direction:column;min-width:0}
+.item-name{font-family:"Bodoni Moda",Georgia,serif;font-size:18px;margin:2px 0 4px}
+.item-desc{font-size:12px;color:var(--muted);margin-bottom:10px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:auto}
+.chip{font-size:11px;background:var(--cream);border:1px solid var(--line);padding:5px 10px;border-radius:999px;color:#625752}
+.item-actions{display:flex;align-items:center;gap:16px;margin-top:14px;flex-wrap:wrap}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;background:#fff}
+.qty button{width:34px;height:34px;border:0;background:transparent;font-size:16px;border-radius:50%;color:var(--ink)}
+.qty button:hover{background:var(--blush)}
+.qty span{min-width:26px;text-align:center;font-size:13px;font-weight:600}
+.remove{border:0;background:none;color:var(--muted);font-size:11px;text-decoration:underline;padding:0}
+.remove:hover{color:var(--rose)}
+.item-price{text-align:right;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end}
+.line-total{font-size:15px;font-weight:700}
+.unit{font-size:11px;color:var(--muted)}
+
+.back-link{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:12px;text-decoration:none;color:#625752}
+.back-link:hover{color:var(--rose)}
+
+.summary{position:sticky;top:96px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.summary h2{font-family:"Bodoni Moda",Georgia,serif;font-size:24px;font-weight:500;margin:0 0 18px;letter-spacing:-.4px}
+.row{display:flex;justify-content:space-between;font-size:13px;margin:11px 0;color:#625752}
+.row b{color:var(--ink);font-weight:600}
+.row.discount{color:#4d8a62}
+.row.discount b{color:#4d8a62}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.total span{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.total strong{font-family:"Bodoni Moda",Georgia,serif;font-size:30px;font-weight:500}
+.promo{display:flex;gap:8px;margin:18px 0 4px}
+.promo input{flex:1;min-width:0;border:1px solid var(--line);border-radius:999px;padding:11px 16px;font-size:12px;background:var(--cream);outline:none;text-transform:uppercase;letter-spacing:.8px}
+.promo input:focus{border-color:var(--rose)}
+.promo button{border:1px solid var(--ink);background:transparent;border-radius:999px;padding:0 18px;font-size:12px}
+.promo button:hover{background:var(--ink);color:#fff}
+.promo-msg{font-size:11px;min-height:16px;margin:6px 4px 0;color:var(--muted)}
+.promo-msg.ok{color:#4d8a62}.promo-msg.err{color:#b4536a}
+.checkout{width:100%;margin-top:14px;border:0;border-radius:999px;background:var(--ink);color:#fff;padding:16px;font-size:12px;letter-spacing:1.4px;transition:transform .2s,background .2s}
+.checkout:hover{transform:translateY(-2px);background:var(--rose)}
+.secure{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px;text-align:center}
+.secure div{font-size:10px;color:var(--muted);line-height:1.5;background:var(--cream);border-radius:12px;padding:11px 6px}
+.secure strong{display:block;color:var(--ink);font-size:11px;margin-bottom:2px}
+.demo-note{font-size:10px;color:#93847c;line-height:1.8;text-align:center;margin:16px 0 0}
+
+.empty{background:#fff;border:1px solid var(--line);border-radius:22px;text-align:center;padding:clamp(40px,8vw,84px) 24px}
+.empty .bag{width:84px;height:84px;margin:0 auto 22px;border-radius:50%;background:var(--blush);display:grid;place-items:center}
+.empty .bag svg{width:38px;height:38px;stroke:var(--rose);fill:none;stroke-width:1.5}
+.empty h2{font-family:"Bodoni Moda",Georgia,serif;font-size:clamp(24px,3vw,32px);font-weight:500;margin:0 0 10px}
+.empty p{font-size:13px;color:var(--muted);line-height:1.9;max-width:360px;margin:0 auto 24px}
+.primary{display:inline-block;border:0;border-radius:999px;background:var(--ink);color:#fff;padding:14px 24px;font-size:12px;letter-spacing:.4px;text-decoration:none;transition:transform .2s,background .2s}
+.primary:hover{transform:translateY(-2px);background:var(--rose)}
+
+footer{background:#211c1a;color:#f9f0e9;padding:30px clamp(16px,5vw,70px) 20px}
+.footer-inner{max-width:1100px;margin:auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-brand{font-family:"Bodoni Moda",Georgia,serif;font-size:23px;letter-spacing:1px}footer p{font-size:11px;line-height:1.8;color:#c7b8b0;max-width:300px}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap}.footer-links a{color:#e6d9d1;text-decoration:none;font-size:11px}
+.copyright{max-width:1100px;margin:22px auto 0;border-top:1px solid #ffffff20;padding-top:15px;font-size:10px;color:#b9aaa2;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:20;display:none;max-width:90vw;background:#211c1a;color:white;padding:13px 18px;border-radius:12px;font-size:12px;box-shadow:0 8px 30px #0002}
+
+@media(max-width:900px){.layout{grid-template-columns:1fr}.summary{position:static}}
+@media(max-width:760px){nav{display:none}.item{grid-template-columns:84px 1fr;gap:14px;padding:14px}.item img{width:84px;height:104px}.item-price{grid-column:1/-1;flex-direction:row;align-items:center;border-top:1px dashed var(--line);padding-top:12px}.steps .bar{flex-basis:16px}}
+@media(max-width:360px){.logo{font-size:21px}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="topbar">A LITTLE MORE GLAMOUR — DISCOVER THE NEW COLLECTION</div>
+<header>
+  <a class="logo" href="index.html">ROMA <span>SHOES</span></a>
+  <nav><a href="index.html#home">Home</a><a href="index.html#shop">Shop</a><a href="index.html#story">Our Story</a></nav>
+  <a class="cart-pill" href="cart.html">Bag (<span id="cartCount">0</span>)</a>
+</header>
+
+<main>
+  <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Shopping bag</div>
+  <div class="page-head">
+    <h1>Your bag</h1>
+    <span class="item-total" id="itemTotal"></span>
+  </div>
+  <div class="steps">
+    <span class="on"><span class="dot">1</span>Bag</span><span class="bar"></span>
+    <span><span class="dot">2</span>Details</span><span class="bar"></span>
+    <span><span class="dot">3</span>Payment</span>
+  </div>
+
+  <div id="content"></div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div><div class="footer-brand">ROMA SHOES</div><p>Little details. Lasting impressions. Find a pair that brings your outfit — and your confidence — together.</p></div><div class="footer-links"><a href="index.html#home">Home</a><a href="index.html#shop">Shop all</a><a href="index.html#story">Our story</a></div></div>
+  <div class="copyright"><span>© 2026 ROMA Shoes · Demo project</span><span>Made with care, one step at a time.</span></div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const CART_KEY='roma_cart_v1';
+const FREE_SHIP=150, SHIP_FEE=6.9;
+let promo=null;
+
+function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||[]}catch(e){return window.__cart||[]}}
+function saveCart(c){window.__cart=c;try{localStorage.setItem(CART_KEY,JSON.stringify(c))}catch(e){}}
+function money(n){return '€ '+n.toFixed(2)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>t.style.display='none',2300)}
+
+try{promo=JSON.parse(sessionStorage.getItem('roma_promo'))}catch(e){}
+
+function render(){
+  const cart=loadCart();
+  const count=cart.reduce((n,i)=>n+i.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('itemTotal').textContent=count?count+(count===1?' item':' items'):'';
+  const box=document.getElementById('content');
+
+  if(!cart.length){
+    box.innerHTML=`<div class="empty">
+      <div class="bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
+      <h2>Your bag is waiting for its first pair.</h2>
+      <p>Nothing here yet. Explore the collection and find the heels that make every entrance shine.</p>
+      <a class="primary" href="index.html#shop">EXPLORE THE COLLECTION&nbsp; ↗</a>
+    </div>`;
+    return;
+  }
+
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discount=promo?subtotal*promo.value/100:0;
+  const after=subtotal-discount;
+  const freeShip=!!(promo&&promo.freeShipping);
+  const shipping=(after>=FREE_SHIP||freeShip)?0:SHIP_FEE;
+  const total=after+shipping;
+  const remaining=freeShip?0:Math.max(0,FREE_SHIP-after);
+  const pct=freeShip?100:Math.min(100,after/FREE_SHIP*100);
+
+  const itemsHtml=cart.map((it,idx)=>`
+    <div class="item">
+      <img src="${esc(it.img)}" alt="${esc(it.name)}">
+      <div class="item-info">
+        <div class="item-name">${esc(it.name)}</div>
+        <div class="item-desc">${esc(it.desc)}</div>
+        <div class="meta"><span class="chip">Size ${esc(it.size)}</span><span class="chip">In stock</span></div>
+        <div class="item-actions">
+          <div class="qty"><button data-act="dec" data-i="${idx}" aria-label="Decrease quantity">−</button><span>${it.qty}</span><button data-act="inc" data-i="${idx}" aria-label="Increase quantity">+</button></div>
+          <button class="remove" data-act="rm" data-i="${idx}">Remove</button>
+        </div>
+      </div>
+      <div class="item-price"><div class="line-total">${money(it.price*it.qty)}</div><div class="unit">${money(it.price)} each</div></div>
+    </div>`).join('');
+
+  box.innerHTML=`<div class="layout">
+    <section>
+      <div class="ship-box">
+        <p>${remaining>0?`You're <strong>${money(remaining)}</strong> away from complimentary shipping.`:`<strong>Great news!</strong> Your order qualifies for complimentary shipping.`}</p>
+        <div class="track"><i style="width:${pct}%"></i></div>
+      </div>
+      <div class="items">${itemsHtml}</div>
+      <a class="back-link" href="index.html#shop">← Continue shopping</a>
+    </section>
+    <aside class="summary">
+      <h2>Order summary</h2>
+      <div class="row"><span>Subtotal</span><b>${money(subtotal)}</b></div>
+      ${promo?`<div class="row discount"><span>Promo (${esc(promo.code)})</span><b>− ${money(discount)}</b></div>`:''}
+      <div class="row"><span>Shipping</span><b>${shipping===0?'Free':money(shipping)}</b></div>
+      <div class="promo"><input id="promoInput" placeholder="Promo code" value="${promo?esc(promo.code):''}" aria-label="Promo code"><button id="promoBtn">Apply</button></div>
+      <div class="promo-msg ${promo?'ok':''}" id="promoMsg">${promo?'Code applied ✓':'Try ROMA10 for 10% off.'}</div>
+      <div class="total"><span>Total</span><strong>${money(total)}</strong></div>
+      <button class="checkout" id="checkoutBtn">PROCEED TO CHECKOUT</button>
+      <div class="secure">
+        <div><strong>✦ Secure</strong>Protected checkout</div>
+        <div><strong>♡ Easy returns</strong>Within 14 days</div>
+        <div><strong>✧ Gift ready</strong>Beautifully wrapped</div>
+      </div>
+      <p class="demo-note">Secure payment is handled by Stripe. We never see or store your card details.</p>
+    </aside>
+  </div>`;
+
+  box.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',()=>{
+    const c=loadCart(), i=+b.dataset.i;
+    if(b.dataset.act==='inc')c[i].qty++;
+    if(b.dataset.act==='dec'){c[i].qty--;if(c[i].qty<1)c.splice(i,1)}
+    if(b.dataset.act==='rm'){c.splice(i,1);showToast('Removed from your bag.')}
+    saveCart(c);render();
+  }));
+  document.getElementById('promoBtn').addEventListener('click',applyPromo);
+  document.getElementById('promoInput').addEventListener('keydown',e=>{if(e.key==='Enter')applyPromo()});
+  document.getElementById('checkoutBtn').addEventListener('click',()=>{window.location.href='checkout.html'});
+}
+
+async function applyPromo(){
+  const input=document.getElementById('promoInput');
+  const code=input.value.trim().toUpperCase();
+  const msg=document.getElementById('promoMsg');
+  if(!code){promo=null;try{sessionStorage.removeItem('roma_promo')}catch(e){}render();return}
+  const btn=document.getElementById('promoBtn');btn.disabled=true;msg.className='promo-msg';msg.textContent='Checking…';
+  try{
+    const res=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'promo',code})});
+    if(res.status===404){msg.textContent='Sorry, that code is not valid.';msg.className='promo-msg err';btn.disabled=false;return}
+    const data=await res.json();
+    if(!res.ok||!data.ok)throw new Error('bad');
+    promo={code,value:data.percent,freeShipping:!!data.freeShipping};
+    try{sessionStorage.setItem('roma_promo',JSON.stringify(promo))}catch(e){}
+    render();showToast('Promo code applied ✓');
+  }catch(e){msg.textContent='Could not check the code. Please try again.';msg.className='promo-msg err';btn.disabled=false}
+}
+
+render();
+</script>
+</body>
+</html>
