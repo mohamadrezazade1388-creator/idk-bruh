@@ -1,11 +1,30 @@
-
 // Creates a Stripe Checkout Session. Prices are defined HERE (server-side)
 // so customers can't change them from the browser.
 const CATALOG = {
   'Golden Hour Platforms': 8900,
   'Golden Affair Heels': 9500,
   'Rose Glow Platforms': 8500,
-  'Silver Starlight Heels': 9000
+  'Silver Starlight Heels': 9000,
+  'Pearl Soiree Platforms': 9900,
+  'Mirror Gold Platforms': 8900,
+  'Rose Baguette Platforms': 9500,
+  'Aurora Crystal Platforms': 9500,
+  'Champagne Baguette Platforms': 9500,
+  'Chrome Silver Platforms': 8900,
+  'Silver Ribbon Platforms': 9200,
+  'Amber Wings Platforms': 9800,
+  'Rose Wings Stilettos': 9800,
+  'Moonlit Wings Stilettos': 9800,
+  'Golden Wings Stilettos': 9800,
+  'Rose Ribbon Platforms': 9500,
+  'Diamond Ribbon Heels': 9500,
+  'Stardust Stilettos': 9200,
+  'Grand Ribbon Platforms': 10500,
+  'Gilded Ribbon Platforms': 9500,
+  'Silver Mosaic Platforms': 10500,
+  'Rose Mosaic Platforms': 10500,
+  'Champagne Mosaic Platforms': 10500,
+  'Gold Mosaic Platforms': 10500
 };
 const CURRENCY = 'eur';
 const FREE_SHIPPING_FROM = 15000; // cents
