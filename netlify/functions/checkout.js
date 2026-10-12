@@ -29,7 +29,11 @@ const CATALOG = {
 const CURRENCY = 'eur';
 const FREE_SHIPPING_FROM = 15000; // cents
 const SHIPPING_FEE = 690;         // cents
-const PROMOS = { HADIDI100: 100 };    // code -> percent off
+// code -> discount. freeShipping:true also waives the shipping fee.
+const PROMOS = {
+  ROMA10: { percent: 10 },
+  HADIDI100: { percent: 100, freeShipping: true }
+};
 const ALLOWED_SIZES = ['36', '37', '38', '39', '40'];
 
 const json = (statusCode, body) => ({
@@ -54,11 +58,20 @@ async function stripe(path, params, key) {
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
+  let body = {};
+  try { body = JSON.parse(event.body || '{}'); } catch (e) { return json(400, { error: 'Bad request.' }); }
+
+  // Promo check used by the bag page (codes are never sent to the browser)
+  if (body.action === 'promo') {
+    const found = PROMOS[String(body.code || '').trim().toUpperCase()];
+    return found ? json(200, { ok: true, percent: found.percent, freeShipping: !!found.freeShipping }) : json(404, { error: 'invalid' });
+  }
+
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) return json(500, { error: 'Payments are not configured yet.' });
 
   try {
-    const { items, promo, customer } = JSON.parse(event.body || '{}');
+    const { items, promo, customer } = body;
     if (!Array.isArray(items) || !items.length) return json(400, { error: 'Your bag is empty.' });
     if (!customer || !/^\S+@\S+\.\S+$/.test(customer.email || '')) return json(400, { error: 'Please enter a valid email.' });
 
@@ -78,7 +91,8 @@ exports.handler = async (event) => {
       p.append(`line_items[${i}][price_data][product_data][name]`, `${it.name} — Size ${it.size}`);
     });
 
-    const percent = PROMOS[String(promo || '').toUpperCase()];
+    const promoInfo = PROMOS[String(promo || '').trim().toUpperCase()];
+    const percent = promoInfo ? promoInfo.percent : 0;
     let discounted = subtotal;
     if (percent) {
       const coupon = await stripe('coupons', new URLSearchParams({ percent_off: String(percent), duration: 'once' }), key);
@@ -86,7 +100,7 @@ exports.handler = async (event) => {
       discounted = Math.round(subtotal * (100 - percent) / 100);
     }
 
-    const shipping = discounted >= FREE_SHIPPING_FROM ? 0 : SHIPPING_FEE;
+    const shipping = (discounted >= FREE_SHIPPING_FROM || (promoInfo && promoInfo.freeShipping)) ? 0 : SHIPPING_FEE;
     p.append('shipping_options[0][shipping_rate_data][type]', 'fixed_amount');
     p.append('shipping_options[0][shipping_rate_data][display_name]', shipping ? 'Standard shipping' : 'Free shipping');
     p.append('shipping_options[0][shipping_rate_data][fixed_amount][amount]', String(shipping));
