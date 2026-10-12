@@ -9,13 +9,13 @@
 :root{--ink:#211c1a;--muted:#817570;--rose:#bb777b;--blush:#f2e4e0;--cream:#faf7f3;--line:#e9dfd8;--white:#fff}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Jost,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 button,input{font:inherit}
 button{cursor:pointer}
 a{color:inherit}
 .topbar{background:#211c1a;color:#fff;text-align:center;padding:9px 12px;font-size:11px;letter-spacing:1.3px}
 header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px clamp(16px,5vw,70px);background:#fffdfbf2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.logo{font-family:Georgia,serif;font-size:25px;letter-spacing:1.4px;white-space:nowrap;text-decoration:none}.logo span{color:var(--rose)}
+.logo{font-family:"Bodoni Moda",Georgia,serif;font-size:25px;letter-spacing:1.4px;white-space:nowrap;text-decoration:none}.logo span{color:var(--rose)}
 nav{display:flex;gap:24px}nav a{color:var(--ink);font-size:13px;text-decoration:none}nav a:hover{color:var(--rose)}
 .cart-pill{background:var(--ink);color:#fff;border-radius:999px;padding:10px 14px;font-size:12px;white-space:nowrap;text-decoration:none}
 
@@ -23,7 +23,7 @@ main{max-width:1200px;margin:auto;padding:28px clamp(14px,3vw,30px) 56px}
 .crumbs{font-size:11px;color:var(--muted);letter-spacing:.4px;margin-bottom:14px}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--rose)}
 .page-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:8px;flex-wrap:wrap}
-h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,44px);font-weight:500;letter-spacing:-1px;margin:0}
+h1{font-family:"Bodoni Moda",Georgia,serif;font-size:clamp(30px,4vw,44px);font-weight:500;letter-spacing:-1px;margin:0}
 .item-total{font-size:12px;color:var(--muted)}
 
 .steps{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:18px 0 26px;flex-wrap:wrap}
@@ -46,7 +46,7 @@ h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,44px);font-weight:500;lett
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .item img{width:110px;height:130px;object-fit:cover;border-radius:12px;background:#f0eae5}
 .item-info{display:flex;flex-direction:column;min-width:0}
-.item-name{font-family:Georgia,serif;font-size:18px;margin:2px 0 4px}
+.item-name{font-family:"Bodoni Moda",Georgia,serif;font-size:18px;margin:2px 0 4px}
 .item-desc{font-size:12px;color:var(--muted);margin-bottom:10px}
 .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:auto}
 .chip{font-size:11px;background:var(--cream);border:1px solid var(--line);padding:5px 10px;border-radius:999px;color:#625752}
@@ -65,14 +65,14 @@ h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,44px);font-weight:500;lett
 .back-link:hover{color:var(--rose)}
 
 .summary{position:sticky;top:96px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
-.summary h2{font-family:Georgia,serif;font-size:24px;font-weight:500;margin:0 0 18px;letter-spacing:-.4px}
+.summary h2{font-family:"Bodoni Moda",Georgia,serif;font-size:24px;font-weight:500;margin:0 0 18px;letter-spacing:-.4px}
 .row{display:flex;justify-content:space-between;font-size:13px;margin:11px 0;color:#625752}
 .row b{color:var(--ink);font-weight:600}
 .row.discount{color:#4d8a62}
 .row.discount b{color:#4d8a62}
 .total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
 .total span{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
-.total strong{font-family:Georgia,serif;font-size:30px;font-weight:500}
+.total strong{font-family:"Bodoni Moda",Georgia,serif;font-size:30px;font-weight:500}
 .promo{display:flex;gap:8px;margin:18px 0 4px}
 .promo input{flex:1;min-width:0;border:1px solid var(--line);border-radius:999px;padding:11px 16px;font-size:12px;background:var(--cream);outline:none;text-transform:uppercase;letter-spacing:.8px}
 .promo input:focus{border-color:var(--rose)}
@@ -90,14 +90,14 @@ h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,44px);font-weight:500;lett
 .empty{background:#fff;border:1px solid var(--line);border-radius:22px;text-align:center;padding:clamp(40px,8vw,84px) 24px}
 .empty .bag{width:84px;height:84px;margin:0 auto 22px;border-radius:50%;background:var(--blush);display:grid;place-items:center}
 .empty .bag svg{width:38px;height:38px;stroke:var(--rose);fill:none;stroke-width:1.5}
-.empty h2{font-family:Georgia,serif;font-size:clamp(24px,3vw,32px);font-weight:500;margin:0 0 10px}
+.empty h2{font-family:"Bodoni Moda",Georgia,serif;font-size:clamp(24px,3vw,32px);font-weight:500;margin:0 0 10px}
 .empty p{font-size:13px;color:var(--muted);line-height:1.9;max-width:360px;margin:0 auto 24px}
 .primary{display:inline-block;border:0;border-radius:999px;background:var(--ink);color:#fff;padding:14px 24px;font-size:12px;letter-spacing:.4px;text-decoration:none;transition:transform .2s,background .2s}
 .primary:hover{transform:translateY(-2px);background:var(--rose)}
 
 footer{background:#211c1a;color:#f9f0e9;padding:30px clamp(16px,5vw,70px) 20px}
 .footer-inner{max-width:1100px;margin:auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.footer-brand{font-family:Georgia,serif;font-size:23px;letter-spacing:1px}footer p{font-size:11px;line-height:1.8;color:#c7b8b0;max-width:300px}
+.footer-brand{font-family:"Bodoni Moda",Georgia,serif;font-size:23px;letter-spacing:1px}footer p{font-size:11px;line-height:1.8;color:#c7b8b0;max-width:300px}
 .footer-links{display:flex;gap:18px;flex-wrap:wrap}.footer-links a{color:#e6d9d1;text-decoration:none;font-size:11px}
 .copyright{max-width:1100px;margin:22px auto 0;border-top:1px solid #ffffff20;padding-top:15px;font-size:10px;color:#b9aaa2;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:20;display:none;max-width:90vw;background:#211c1a;color:white;padding:13px 18px;border-radius:12px;font-size:12px;box-shadow:0 8px 30px #0002}
@@ -106,6 +106,7 @@ footer{background:#211c1a;color:#f9f0e9;padding:30px clamp(16px,5vw,70px) 20px}
 @media(max-width:760px){nav{display:none}.item{grid-template-columns:84px 1fr;gap:14px;padding:14px}.item img{width:84px;height:104px}.item-price{grid-column:1/-1;flex-direction:row;align-items:center;border-top:1px dashed var(--line);padding-top:12px}.steps .bar{flex-basis:16px}}
 @media(max-width:360px){.logo{font-size:21px}}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="topbar">A LITTLE MORE GLAMOUR — DISCOVER THE NEW COLLECTION</div>
